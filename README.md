@@ -19,7 +19,14 @@ and targets the 2026 badge firmware ([badger/home](https://github.com/badger/hom
    from the normal REPL).
 2. Copy the whole `badge/apps/jpm_payments_ai` folder to `/system/apps/` on
    the badge.
-3. Eject and pick **jpm_payments_ai** from the menu.
+3. Optional: `./tools/install_icon.sh` gives the menu tile a payment card
+   icon whose contactless waves ripple out when the tile is selected. The menu
+   draws tiles from its own `icons.mpy` rather than `icon.png`, so the script
+   patches the menu's `src/icons.py`, rebuilds `icons.mpy` with `mpy-cross`
+   1.26.1 and adds `anim/jpm_payments_ai.bin`. Other apps' icons are kept, and
+   the menu's originals are backed up to `~/.cache/jpm-payments-ai/menu-backup`.
+   Needs Python 3. Pass the badge's path if it isn't `/Volumes/BADGER`.
+4. Eject and pick **jpm_payments_ai** from the menu.
 
 ## Controls
 
@@ -41,6 +48,9 @@ python tools/build_assets.py path/to/world.geo.json
 # render docs/ screenshots and preview.gif with a rough stand-in for the
 # firmware (fonts and spacing differ from the real badge)
 python tools/preview.py
+
+# the menu icon: --preview draws a PNG contact sheet of the tap animation
+python3 -I tools/menu_icon.py --preview icon-preview.png
 ```
 
 | Globe | About | Scan |

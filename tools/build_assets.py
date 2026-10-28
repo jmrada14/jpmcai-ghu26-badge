@@ -96,13 +96,14 @@ def build_icon():
     size = 96
     img = Image.new("RGBA", (size, size), (0, 0, 0, 0))
     d = ImageDraw.Draw(img)
-    d.ellipse((4, 4, size - 5, size - 5), fill=(10, 22, 52, 255), outline=(80, 200, 255, 255), width=5)
-    # meridians and the equator
-    d.ellipse((30, 6, size - 31, size - 7), outline=(50, 120, 190, 255), width=3)
-    d.line((6, size // 2, size - 7, size // 2), fill=(50, 120, 190, 255), width=3)
-    # a payment arc in gold with its packet
-    d.arc((14, 26, size - 15, size + 30), start=200, end=340, fill=(255, 196, 64, 255), width=6)
-    d.ellipse((size - 30, 30, size - 14, 46), fill=(255, 236, 160, 255))
+    # a payment card with its stripe and chip, the same design as the menu
+    # icon from tools/menu_icon.py
+    d.rounded_rectangle((4, 42, 74, 88), radius=8, fill=(10, 22, 52, 255), outline=(80, 200, 255, 255), width=4)
+    d.rectangle((6, 52, 72, 60), fill=(80, 200, 255, 255))
+    d.rounded_rectangle((13, 67, 29, 78), radius=2, fill=(255, 196, 64, 255))
+    # contactless waves off its top corner, in gold
+    for r in (14, 25, 36):
+        d.arc((54 - r, 38 - r, 54 + r, 38 + r), start=282, end=348, fill=(255, 196, 64, 255), width=7)
     img.resize((24, 24), Image.LANCZOS).save(os.path.join(APP, "icon.png"))
 
 
